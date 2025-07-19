@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zephyer Lojas - Marketplace Roblox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6200ee;
+            --primary-light: #9e47ff;
+            --primary-dark: #0400ba;
+            --secondary-color: #03dac6;
+            --secondary-light: #66fff9;
+            --secondary-dark: #00a895;
+            --background: #f5f5f5;
+            --surface: #ffffff;
+            --error: #b00020;
+            --on-primary: #ffffff;
+            --on-secondary: #000000;
+            --on-background: #000000;
+            --on-surface: #000000;
+            --on-error: #ffffff;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--on-background);
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 80px;
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1rem;
+            color: var(--on-background);
+            opacity: 0.8;
+        }
+
+        .stores-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .store-card {
+            background-color: var(--surface);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .store-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .store-banner {
+            height: 150px;
+            background-color: var(--primary-color);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .store-info {
+            padding: 15px;
+        }
+
+        .store-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .store-owner {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--on-surface);
+            opacity: 0.8;
+        }
+
+        .store-owner .owner-badge {
+            background-color: var(--secondary-color);
+            color: var(--on-secondary);
+            font-size: 0.7rem;
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-left: 5px;
+        }
+
+        .store-description {
+            font-size: 0.9rem;
+            color: var(--on-surface);
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .store-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--on-surface);
+            opacity: 0.6;
+        }
+
+        .open-store-btn {
+            background-color: var(--primary-color);
+            color: var(--on-primary);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .open-store-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--surface);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--on-surface);
+            opacity: 0.6;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+        }
+
+        .nav-btn i {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .nav-btn.active {
+            opacity: 1;
+            color: var(--primary-color);
+        }
+
+        .nav-btn:hover {
+            opacity: 1;
+        }
+
+        .floating-buttons {
+            position: fixed;
+            bottom: 70px;
+            right: 20px;
+            z-index: 99;
+        }
+
+        .fab {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: var(--on-primary);
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fab:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        .fab:active {
+            transform: scale(0.95);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: var(--surface);
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--on-surface);
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .close-modal:hover {
+            opacity: 1;
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--on-surface);
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="color"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .creation-methods {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .method-btn {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: var(--surface);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .method-btn i {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .method-btn.active {
+            border-color: var(--primary-color);
+            background-color: rgba(98, 0, 238, 0.1);
+        }
+
+        .method-btn:hover {
+            border-color: var(--primary-color);
+        }
+
+        .creation-options {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+        }
+
+        .creation-options h3 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: var(--on-primary);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .ranking-list {
+            margin-top: 20px;
+        }
+
+        .ranking-item {
+            background-color: var(--surface);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .ranking-position {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            width: 40px;
+            text-align: center;
+        }
+
+        .ranking-info {
+            flex: 1;
+            margin: 0 15px;
+        }
+
+        .ranking-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .ranking-meta {
+            display: flex;
+            font-size: 0.8rem;
+            color: var(--on-surface);
+            opacity: 0.8;
+        }
+
+        .ranking-meta span {
+            margin-right: 10px;
+        }
+
+        .ranking-visits {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .store-page {
+            background-color: var(--surface);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-top: 20px;
+        }
+
+        .store-header {
+            padding: 20px;
+            text-align: center;
+            background-color: var(--primary-color);
+            color: var(--on-primary);
+            position: relative;
+        }
+
+        .store-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .store-owner-page {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .store-description-page {
+            margin: 20px 0;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .store-items-container {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .store-item {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .store-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .store-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .store-item h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .store-item p {
+            font-size: 0.9rem;
+            color: var(--on-surface);
+            opacity: 0.8;
+        }
+
+        .empty-store {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--on-surface);
+            opacity: 0.6;
+        }
+
+        .empty-store i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stores-container {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+            
+            .store-items-container {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .stores-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .store-items-container {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .nav-btn span {
+                display: none;
+            }
+            
+            .nav-btn i {
+                font-size: 1.5rem;
+                margin-bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Zephyer Lojas</h1>
+            <p>Encontre as melhores lojas da comunidade Roblox</p>
+        </header>
+
+        <main id="main-content">
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Carregando lojas...</p>
+            </div>
+        </main>
+
+        <div class="floating-buttons">
+            <button id="create-store-btn" class="fab">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+
+        <nav class="bottom-nav">
+            <button id="home-btn" class="nav-btn active">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </button>
+            <button id="rank-btn" class="nav-btn">
+                <i class="fas fa-trophy"></i>
+                <span>Rank</span>
+            </button>
+            <button id="my-store-btn" class="nav-btn">
+                <i class="fas fa-store"></i>
+                <span>Minha Loja</span>
+            </button>
+        </nav>
+
+        <!-- Modal de Criação de Loja -->
+        <div id="create-store-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Criar Nova Loja</h2>
+                <form id="store-form">
+                    <div class="form-group">
+                        <label for="roblox-user">Seu Usuário Roblox:</label>
+                        <input type="text" id="roblox-user" required placeholder="Ex: ZephyerPro">
+                    </div>
+                    <div class="form-group">
+                        <label for="store-name">Nome da Loja:</label>
+                        <input type="text" id="store-name" required placeholder="Ex: Loja de Raros">
+                    </div>
+                    <div class="form-group">
+                        <label for="store-description">Descrição:</label>
+                        <textarea id="store-description" required placeholder="Descreva sua loja..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Escolha o método de criação:</label>
+                        <div class="creation-methods">
+                            <button type="button" id="manual-method" class="method-btn active">
+                                <i class="fas fa-paint-brush"></i>
+                                <span>Criar Manualmente</span>
+                            </button>
+                            <button type="button" id="html-method" class="method-btn">
+                                <i class="fas fa-code"></i>
+                                <span>Usar HTML</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="manual-options" class="creation-options">
+                        <h3>Configurações Manuais</h3>
+                        <div class="form-group">
+                            <label for="bg-type">Tipo de Fundo:</label>
+                            <select id="bg-type">
+                                <option value="color">Cor Sólida</option>
+                                <option value="image">Imagem</option>
+                                <option value="gradient">Gradiente</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="bg-color-group">
+                            <label for="bg-color">Cor de Fundo:</label>
+                            <input type="color" id="bg-color" value="#6200ee">
+                        </div>
+                        <div class="form-group hidden" id="bg-image-group">
+                            <label for="bg-image">URL da Imagem:</label>
+                            <input type="text" id="bg-image" placeholder="Cole a URL da imagem">
+                        </div>
+                        <div class="form-group hidden" id="bg-gradient-group">
+                            <label for="gradient-colors">Cores do Gradiente:</label>
+                            <input type="color" id="gradient-color1" value="#6200ee">
+                            <input type="color" id="gradient-color2" value="#03dac6">
+                            <select id="gradient-direction">
+                                <option value="to right">Horizontal</option>
+                                <option value="to bottom">Vertical</option>
+                                <option value="135deg">Diagonal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="html-options" class="creation-options hidden">
+                        <h3>Editor HTML</h3>
+                        <div class="form-group">
+                            <label for="custom-html">Cole seu HTML aqui:</label>
+                            <textarea id="custom-html" placeholder="<div class='store-item'>...</div>"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn">Criar Loja</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal de Edição de Loja -->
+        <div id="edit-store-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Editar Minha Loja</h2>
+                <div id="edit-store-content">
+                    <!-- Conteúdo dinâmico será carregado aqui -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script>
+        // Inicialização do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBVy9JL68_vfin6z7XvdboJwIOga8PlM4E",
+            authDomain: "robloxzephyer-lojas.firebaseapp.com",
+            projectId: "robloxzephyer-lojas",
+            storageBucket: "robloxzephyer-lojas.appspot.com",
+            messagingSenderId: "176356348593",
+            appId: "1:176356348593:web:6db3349f8f0ebd39718890",
+            measurementId: "G-SYFDZ0MSG0"
+        };
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Variáveis globais
+        let currentUser = null;
+        let currentView = 'home';
+        let stores = [];
+        let userStore = null;
+
+        // Elementos DOM
+        const mainContent = document.getElementById('main-content');
+        const loadingElement = document.getElementById('loading');
+        const homeBtn = document.getElementById('home-btn');
+        const rankBtn = document.getElementById('rank-btn');
+        const myStoreBtn = document.getElementById('my-store-btn');
+        const createStoreBtn = document.getElementById('create-store-btn');
+        const createStoreModal = document.getElementById('create-store-modal');
+        const editStoreModal = document.getElementById('edit-store-modal');
+        const closeModalButtons = document.querySelectorAll('.close-modal');
+        const storeForm = document.getElementById('store-form');
+        const manualMethodBtn = document.getElementById('manual-method');
+        const htmlMethodBtn = document.getElementById('html-method');
+        const manualOptions = document.getElementById('manual-options');
+        const htmlOptions = document.getElementById('html-options');
+        const bgTypeSelect = document.getElementById('bg-type');
+        const bgColorGroup = document.getElementById('bg-color-group');
+        const bgImageGroup = document.getElementById('bg-image-group');
+        const bgGradientGroup = document.getElementById('bg-gradient-group');
+        const editStoreContent = document.getElementById('edit-store-content');
+
+        // Função para carregar todas as lojas
+        async function loadStores() {
+            showLoading();
+            try {
+                const snapshot = await db.collection('stores').get();
+                stores = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                // Verificar se há parâmetro de loja na URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const storeParam = urlParams.get('loja');
+                
+                if (storeParam) {
+                    const store = stores.find(s => s.id === storeParam);
+                    if (store) {
+                        openStorePage(store);
+                        return;
+                    }
+                }
+                
+                renderStores();
+            } catch (error) {
+                console.error("Erro ao carregar lojas:", error);
+                showError("Erro ao carregar lojas. Tente novamente mais tarde.");
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Função para renderizar a lista de lojas
+        function renderStores() {
+            mainContent.innerHTML = `
+                <h2>Todas as Lojas</h2>
+                <div class="stores-container" id="stores-container"></div>
+            `;
+            
+            const storesContainer = document.getElementById('stores-container');
+            
+            if (stores.length === 0) {
+                storesContainer.innerHTML = `
+                    <div class="empty-store">
+                        <i class="fas fa-store-slash"></i>
+                        <p>Nenhuma loja encontrada. Seja o primeiro a criar uma!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            stores.forEach(store => {
+                const storeCard = document.createElement('div');
+                storeCard.className = 'store-card';
+                storeCard.innerHTML = `
+                    <div class="store-banner" style="background-color: ${store.bgColor || '#6200ee'}"></div>
+                    <div class="store-info">
+                        <h3>${store.name}</h3>
+                        <div class="store-owner">
+                            <span>${store.robloxUser}</span>
+                            <span class="owner-badge">Dono</span>
+                        </div>
+                        <p class="store-description">${store.description}</p>
+                        <div class="store-meta">
+                            <span>${new Date(store.createdAt?.toDate()).toLocaleDateString()}</span>
+                            <span>${store.visits || 0} visitas</span>
+                        </div>
+                        <button class="open-store-btn" data-store-id="${store.id}">Abrir Loja</button>
+                    </div>
+                `;
+                storesContainer.appendChild(storeCard);
+            });
+            
+            // Adicionar event listeners aos botões
+            document.querySelectorAll('.open-store-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const storeId = btn.getAttribute('data-store-id');
+                    const store = stores.find(s => s.id === storeId);
+                    if (store) openStorePage(store);
+                });
+            });
+            
+            // Adicionar event listener aos cards
+            document.querySelectorAll('.store-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const storeId = card.querySelector('.open-store-btn').getAttribute('data-store-id');
+                    const store = stores.find(s => s.id === storeId);
+                    if (store) openStorePage(store);
+                });
+            });
+        }
+
+        // Função para abrir a página de uma loja
+        function openStorePage(store) {
+            // Atualizar contador de visitas
+            updateVisitCount(store.id);
+            
+            // Verificar se é a loja do usuário atual
+            const isUserStore = currentUser && store.robloxUser === currentUser;
+            
+            mainContent.innerHTML = `
+                <div class="store-page">
+                    <div class="store-header" style="background-color: ${store.bgColor || '#6200ee'}">
+                        <h2>${store.name}</h2>
+                        <p class="store-owner-page">Dono: ${store.robloxUser}</p>
+                    </div>
+                    <div class="store-description-page">
+                        ${store.description}
+                    </div>
+                    <div class="store-items-container" id="store-items-container"></div>
+                    ${isUserStore ? `
+                        <div class="store-actions" style="padding: 20px; text-align: center;">
+                            <button id="edit-store-btn" class="submit-btn" style="width: auto; display: inline-block;">
+                                <i class="fas fa-edit"></i> Editar Loja
+                            </button>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            const itemsContainer = document.getElementById('store-items-container');
+            
+            if (store.items && store.items.length > 0) {
+                store.items.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'store-item';
+                    itemElement.innerHTML = `
+                        <img src="${item.image || 'https://via.placeholder.com/150'}" alt="${item.name}">
+                        <h4>${item.name}</h4>
+                        <p>${item.price || 'Preço não informado'}</p>
+                    `;
+                    itemElement.addEventListener('click', () => {
+                        if (item.link) window.open(item.link, '_blank');
+                    });
+                    itemsContainer.appendChild(itemElement);
+                });
+            } else {
+                itemsContainer.innerHTML = `
+                    <div class="empty-store">
+                        <i class="fas fa-box-open"></i>
+                        <p>Esta loja está vazia no momento.</p>
+                    </div>
+                `;
+            }
+            
+            // Adicionar event listener ao botão de edição (se for a loja do usuário)
+            if (isUserStore) {
+                document.getElementById('edit-store-btn').addEventListener('click', () => {
+                    openEditStoreModal(store);
+                });
+            }
+            
+            // Atualizar URL para incluir o parâmetro da loja
+            window.history.pushState({}, '', `?loja=${store.id}`);
+        }
+
+        // Função para atualizar o contador de visitas
+        async function updateVisitCount(storeId) {
+            try {
+                const storeRef = db.collection('stores').doc(storeId);
+                await storeRef.update({
+                    visits: firebase.firestore.FieldValue.increment(1),
+                    lastVisit: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                // Atualizar localmente
+                const storeIndex = stores.findIndex(s => s.id === storeId);
+                if (storeIndex !== -1) {
+                    stores[storeIndex].visits = (stores[storeIndex].visits || 0) + 1;
+                }
+            } catch (error) {
+                console.error("Erro ao atualizar contador de visitas:", error);
+            }
+        }
+
+        // Função para carregar o ranking de lojas
+        async function loadRanking() {
+            showLoading();
+            try {
+                const snapshot = await db.collection('stores')
+                    .orderBy('visits', 'desc')
+                    .limit(10)
+                    .get();
+                
+                const rankedStores = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                mainContent.innerHTML = `
+                    <h2>Lojas Mais Visitadas</h2>
+                    <div class="ranking-list" id="ranking-list"></div>
+                `;
+                
+                const rankingList = document.getElementById('ranking-list');
+                
+                if (rankedStores.length === 0) {
+                    rankingList.innerHTML = `
+                        <div class="empty-store">
+                            <i class="fas fa-trophy"></i>
+                            <p>Nenhuma loja no ranking ainda.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                rankedStores.forEach((store, index) => {
+                    const rankItem = document.createElement('div');
+                    rankItem.className = 'ranking-item';
+                    rankItem.innerHTML = `
+                        <div class="ranking-position">${index + 1}</div>
+                        <div class="ranking-info">
+                            <h3>${store.name}</h3>
+                            <div class="ranking-meta">
+                                <span>Dono: ${store.robloxUser}</span>
+                                <span>Criada em: ${new Date(store.createdAt?.toDate()).toLocaleDateString()}</span>
+                            </div>
+                        </div>
+                        <div class="ranking-visits">
+                            ${store.visits || 0} visitas
+                        </div>
+                        <button class="open-store-btn" data-store-id="${store.id}">Ver</button>
+                    `;
+                    rankingList.appendChild(rankItem);
+                });
+                
+                // Adicionar event listeners aos botões
+                document.querySelectorAll('.open-store-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const storeId = btn.getAttribute('data-store-id');
+                        const store = rankedStores.find(s => s.id === storeId);
+                        if (store) openStorePage(store);
+                    });
+                });
+            } catch (error) {
+                console.error("Erro ao carregar ranking:", error);
+                showError("Erro ao carregar ranking. Tente novamente mais tarde.");
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Função para carregar a loja do usuário
+        async function loadUserStore() {
+            if (!currentUser) {
+                mainContent.innerHTML = `
+                    <div class="empty-store">
+                        <i class="fas fa-user-lock"></i>
+                        <p>Você precisa informar seu usuário Roblox para acessar esta função.</p>
+                        <button id="set-user-btn" class="submit-btn" style="margin-top: 20px;">
+                            Definir Usuário Roblox
+                        </button>
+                    </div>
+                `;
+                
+                document.getElementById('set-user-btn').addEventListener('click', () => {
+                    const user = prompt("Digite seu usuário Roblox:");
+                    if (user) {
+                        currentUser = user.trim();
+                        loadUserStore();
+                    }
+                });
+                return;
+            }
+            
+            showLoading();
+            try {
+                const snapshot = await db.collection('stores')
+                    .where('robloxUser', '==', currentUser)
+                    .limit(1)
+                    .get();
+                
+                if (snapshot.empty) {
+                    mainContent.innerHTML = `
+                        <div class="empty-store">
+                            <i class="fas fa-store-slash"></i>
+                            <p>Você ainda não criou uma loja.</p>
+                            <button id="create-store-from-empty-btn" class="submit-btn" style="margin-top: 20px;">
+                                <i class="fas fa-plus"></i> Criar Loja
+                            </button>
+                        </div>
+                    `;
+                    
+                    document.getElementById('create-store-from-empty-btn').addEventListener('click', () => {
+                        createStoreModal.style.display = 'block';
+                    });
+                } else {
+                    userStore = { id: snapshot.docs[0].id, ...snapshot.docs[0].data() };
+                    openStorePage(userStore);
+                }
+            } catch (error) {
+                console.error("Erro ao carregar loja do usuário:", error);
+                showError("Erro ao carregar sua loja. Tente novamente mais tarde.");
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // Função para abrir o modal de edição de loja
+        function openEditStoreModal(store) {
+            editStoreContent.innerHTML = `
+                <form id="edit-store-form">
+                    <input type="hidden" id="edit-store-id" value="${store.id}">
+                    <div class="form-group">
+                        <label for="edit-store-name">Nome da Loja:</label>
+                        <input type="text" id="edit-store-name" value="${store.name}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-store-description">Descrição:</label>
+                        <textarea id="edit-store-description" required>${store.description}</textarea>
+                    </div>
+                    <h3>Itens da Loja</h3>
+                    <div id="edit-store-items">
+                        ${store.items && store.items.length > 0 ? 
+                            store.items.map((item, index) => `
+                                <div class="item-group" data-index="${index}">
+                                    <div class="form-group">
+                                        <label>Nome do Item:</label>
+                                        <input type="text" class="edit-item-name" value="${item.name}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Preço:</label>
+                                        <input type="text" class="edit-item-price" value="${item.price || ''}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Link do Item:</label>
+                                        <input type="text" class="edit-item-link" value="${item.link || ''}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>URL da Imagem:</label>
+                                        <input type="text" class="edit-item-image" value="${item.image || ''}">
+                                    </div>
+                                    <button type="button" class="remove-item-btn">Remover Item</button>
+                                    <hr>
+                                </div>
+                            `).join('') : 
+                            '<p>Nenhum item adicionado ainda.</p>'
+                        }
+                    </div>
+                    <button type="button" id="add-item-btn" class="submit-btn" style="background-color: var(--secondary-color); margin-top: 10px;">
+                        <i class="fas fa-plus"></i> Adicionar Item
+                    </button>
+                    <button type="submit" class="submit-btn" style="margin-top: 20px;">
+                        Salvar Alterações
+                    </button>
+                    <button type="button" id="delete-store-btn" class="submit-btn" style="background-color: var(--error); margin-top: 10px;">
+                        <i class="fas fa-trash"></i> Excluir Loja
+                    </button>
+                </form>
+            `;
+            
+            // Adicionar event listeners
+            document.getElementById('add-item-btn').addEventListener('click', () => {
+                const itemsContainer = document.getElementById('edit-store-items');
+                const newIndex = itemsContainer.querySelectorAll('.item-group').length;
+                
+                const newItem = document.createElement('div');
+                newItem.className = 'item-group';
+                newItem.setAttribute('data-index', newIndex);
+                newItem.innerHTML = `
+                    <div class="form-group">
+                        <label>Nome do Item:</label>
+                        <input type="text" class="edit-item-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Preço:</label>
+                        <input type="text" class="edit-item-price">
+                    </div>
+                    <div class="form-group">
+                        <label>Link do Item:</label>
+                        <input type="text" class="edit-item-link" required>
+                    </div>
+                    <div class="form-group">
+                        <label>URL da Imagem:</label>
+                        <input type="text" class="edit-item-image">
+                    </div>
+                    <button type="button" class="remove-item-btn">Remover Item</button>
+                    <hr>
+                `;
+                
+                newItem.querySelector('.remove-item-btn').addEventListener('click', () => {
+                    newItem.remove();
+                });
+                
+                itemsContainer.appendChild(newItem);
+            });
+            
+            document.querySelectorAll('.remove-item-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.closest('.item-group').remove();
+                });
+            });
+            
+            document.getElementById('edit-store-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const storeId = document.getElementById('edit-store-id').value;
+                const name = document.getElementById('edit-store-name').value;
+                const description = document.getElementById('edit-store-description').value;
+                
+                const itemGroups = document.querySelectorAll('.item-group');
+                const items = Array.from(itemGroups).map(group => {
+                    return {
+                        name: group.querySelector('.edit-item-name').value,
+                        price: group.querySelector('.edit-item-price').value,
+                        link: group.querySelector('.edit-item-link').value,
+                        image: group.querySelector('.edit-item-image').value
+                    };
+                });
+                
+                try {
+                    await db.collection('stores').doc(storeId).update({
+                        name,
+                        description,
+                        items,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    
+                    alert('Loja atualizada com sucesso!');
+                    editStoreModal.style.display = 'none';
+                    
+                    // Recarregar a loja
+                    const updatedStore = { ...userStore, name, description, items };
+                    userStore = updatedStore;
+                    openStorePage(updatedStore);
+                } catch (error) {
+                    console.error("Erro ao atualizar loja:", error);
+                    alert('Erro ao atualizar loja. Tente novamente.');
+                }
+            });
+            
+            document.getElementById('delete-store-btn').addEventListener('click', async () => {
+                if (confirm('Tem certeza que deseja excluir sua loja? Esta ação não pode ser desfeita.')) {
+                    try {
+                        await db.collection('stores').doc(store.id).delete();
+                        alert('Loja excluída com sucesso!');
+                        editStoreModal.style.display = 'none';
+                        userStore = null;
+                        loadStores();
+                        currentView = 'home';
+                        updateNavButtons();
+                    } catch (error) {
+                        console.error("Erro ao excluir loja:", error);
+                        alert('Erro ao excluir loja. Tente novamente.');
+                    }
+                }
+            });
+            
+            editStoreModal.style.display = 'block';
+        }
+
+        // Função para mostrar loading
+        function showLoading() {
+            loadingElement.style.display = 'block';
+        }
+
+        // Função para esconder loading
+        function hideLoading() {
+            loadingElement.style.display = 'none';
+        }
+
+        // Função para mostrar erro
+        function showError(message) {
+            mainContent.innerHTML = `
+                <div class="empty-store">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+
+        // Função para atualizar botões de navegação
+        function updateNavButtons() {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (currentView === 'home') {
+                homeBtn.classList.add('active');
+            } else if (currentView === 'rank') {
+                rankBtn.classList.add('active');
+            } else if (currentView === 'my-store') {
+                myStoreBtn.classList.add('active');
+            }
+        }
+
+        // Event Listeners
+        homeBtn.addEventListener('click', () => {
+            currentView = 'home';
+            updateNavButtons();
+            loadStores();
+        });
+
+        rankBtn.addEventListener('click', () => {
+            currentView = 'rank';
+            updateNavButtons();
+            loadRanking();
+        });
+
+        myStoreBtn.addEventListener('click', () => {
+            currentView = 'my-store';
+            updateNavButtons();
+            loadUserStore();
+        });
+
+        createStoreBtn.addEventListener('click', () => {
+            createStoreModal.style.display = 'block';
+        });
+
+        closeModalButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                createStoreModal.style.display = 'none';
+                editStoreModal.style.display = 'none';
+            });
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === createStoreModal) {
+                createStoreModal.style.display = 'none';
+            }
+            if (e.target === editStoreModal) {
+                editStoreModal.style.display = 'none';
+            }
+        });
+
+        manualMethodBtn.addEventListener('click', () => {
+            manualMethodBtn.classList.add('active');
+            htmlMethodBtn.classList.remove('active');
+            manualOptions.classList.remove('hidden');
+            htmlOptions.classList.add('hidden');
+        });
+
+        htmlMethodBtn.addEventListener('click', () => {
+            htmlMethodBtn.classList.add('active');
+            manualMethodBtn.classList.remove('active');
+            htmlOptions.classList.remove('hidden');
+            manualOptions.classList.add('hidden');
+        });
+
+        bgTypeSelect.addEventListener('change', () => {
+            const bgType = bgTypeSelect.value;
+            
+            bgColorGroup.classList.add('hidden');
+            bgImageGroup.classList.add('hidden');
+            bgGradientGroup.classList.add('hidden');
+            
+            if (bgType === 'color') {
+                bgColorGroup.classList.remove('hidden');
+            } else if (bgType === 'image') {
+                bgImageGroup.classList.remove('hidden');
+            } else if (bgType === 'gradient') {
+                bgGradientGroup.classList.remove('hidden');
+            }
+        });
+
+        storeForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const robloxUser = document.getElementById('roblox-user').value.trim();
+            const storeName = document.getElementById('store-name').value.trim();
+            const storeDescription = document.getElementById('store-description').value.trim();
+            
+            if (!robloxUser || !storeName || !storeDescription) {
+                alert('Preencha todos os campos obrigatórios!');
+                return;
+            }
+            
+            // Definir o usuário atual
+            currentUser = robloxUser;
+            
+            const storeData = {
+                robloxUser,
+                name: storeName,
+                description: storeDescription,
+                visits: 0,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                items: []
+            };
+            
+            // Adicionar configurações de design
+            if (manualMethodBtn.classList.contains('active')) {
+                const bgType = bgTypeSelect.value;
+                
+                if (bgType === 'color') {
+                    storeData.bgColor = document.getElementById('bg-color').value;
+                } else if (bgType === 'image') {
+                    storeData.bgImage = document.getElementById('bg-image').value;
+                } else if (bgType === 'gradient') {
+                    storeData.bgGradient = {
+                        color1: document.getElementById('gradient-color1').value,
+                        color2: document.getElementById('gradient-color2').value,
+                        direction: document.getElementById('gradient-direction').value
+                    };
+                }
+            } else {
+                storeData.customHtml = document.getElementById('custom-html').value;
+            }
+            
+            try {
+                showLoading();
+                const docRef = await db.collection('stores').add(storeData);
+                
+                alert('Loja criada com sucesso!');
+                createStoreModal.style.display = 'none';
+                storeForm.reset();
+                
+                // Carregar a loja do usuário
+                userStore = { id: docRef.id, ...storeData };
+                currentView = 'my-store';
+                updateNavButtons();
+                openStorePage(userStore);
+            } catch (error) {
+                console.error("Erro ao criar loja:", error);
+                alert('Erro ao criar loja. Tente novamente.');
+            } finally {
+                hideLoading();
+            }
+        });
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            // Verificar se há um usuário armazenado
+            const savedUser = localStorage.getItem('robloxUser');
+            if (savedUser) {
+                currentUser = savedUser;
+            }
+            
+            // Carregar a visualização inicial
+            loadStores();
+        });
+    </script>
+</body>
+</html>
